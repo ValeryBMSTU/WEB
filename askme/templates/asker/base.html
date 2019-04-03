@@ -1,65 +1,119 @@
-{% load static %}
 <!doctype html>
 <html lang="en">
-<head>
-	<!-- Required meta tags -->
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	<title>Ask panda!</title>
-</head>
-<body>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-	<!-- Navbar -->
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-		<img src="{% static "img/ask_panda_icon.png" %}" height="48" style =  "margin: 7px 30px 7px 10px">
-		<div>
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-		</div>
-		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-			<form class="form-inline my-2 my-lg-0">
-				<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" style="width: 450px;">
-				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-			</form>
-		</div>
-		<img src="{% static "img/default_user_icon.png" %}" height="48" width="48" style = " margin: 7px 10px 7px 0px">
-		<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-			<li class="nav-item">
-				<a class="nav-link" href="#">Settings</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="#">Log out</a>
-			</li>
-		</ul>
-	</nav>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>registration</title>
+  </head>
+  <body>
 
-	<!-- main body -->
-	{% block tags %} o , privet, ne rabotaet {% endblock %}
-	<!-- <div style = "position: absolute;right: 15px; margin: 15px 0px 0px 0px">
-	<a href="#" class="badge badge-primary" >Евгений,</a>
-	<a href="#" class="badge badge-primary" >Аниме</a>
-	<a href="#" class="badge badge-primary" >На</a>
-	<a href="#" class="badge badge-primary" >Аве -</a>
-	</div>
-	<div style = "position: absolute; right: 15px; margin: 45px 0px 0px 0px">
-	<a href="#" class="badge badge-primary">Здоровья</a>
-	<a href="#" class="badge badge-primary">Вашей</a>
-	<a href="#" class="badge badge-primary">Маме</a>
-	</div> -->
+<nav class="navbar navbar-dark bg-dark">
 
+  <a class="navbar-brand text-light">HelloAsk</a>
 
-<!-- footer body -->
-<footer class="container" style = " margin: 520px 0px 0px 25px">
-	<p>© Ask Panda 2019</p>
-</footer>
-<!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<!--<script src="{% static 'js/bootstrap.min.js' %}"></script>-->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-</body>
+  <form class="form-inline">
+    <div class="form-group mb-2">
+      <input class="form-control" type="search" placeholder="search" aria-label="search">
+      <button class="btn btn-success" type="button">Ask!</button>
+    </div>
+  </form>
+  <form class="form-inline">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <a href="#">log in</a>
+        </div>
+        <div class="col">
+          <a href="#">register</a>
+        </div>
+      </div>
+    </div>
+  </form>
+
+</nav>
+<div class="lines">
+<div class="container-fluid">
+  <div class="row">
+
+    <div class="col-8">
+
+    </div>
+
+    <div class="col-4">
+      <h2>Popular Tags</h2>
+      <div class="row">
+        <div class="col">
+          perl
+        </div>
+        <div class="col">
+          python
+        </div>
+        <div class="col">
+          Technopark
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          MySQL
+        </div>
+        <div class="col">
+          django
+        </div>
+        <div class="col">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          Mail.ru
+        </div>
+        <div class="col">
+          Voloshin
+        </div>
+        <div class="col">
+          Firefox
+        </div>
+      </div>
+      <h2>Best Members</h2>
+      <div class="row">
+        <div class="col">
+          <a href="#">Mr. Freeman</a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+              <a href="#">Dr. Hous</a>
+        </div>
+      </div>
+      <div class="row">
+       <div class="col">
+           <a href="#">Bender</a>
+       </div>
+      </div>
+      <div class="row">
+       <div class="col">
+           <a href="#">Queen Victoria</a>
+       </div>
+      </div>
+      <div class="row">
+       <div class="col">
+           <a href="#">V. Pupkin</a>
+       </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="lines">
+{% block content %}
+
+{% endblock %}
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.j" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
 </html>
