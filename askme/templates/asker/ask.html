@@ -2,7 +2,7 @@
 {% load staticfiles %}
 
 {% block title %}
-<title>tag</title>
+<title>ask</title>
 {% endblock %}
 
 {% block user %}
@@ -12,16 +12,10 @@
 {% block mainContent %}
   <div class="row align-items-center">
     <div class="col-auto">
-      <h3>Tag:</h3>
-    </div>
-    <div class="col">
-      <h3>Bender</h3>
+      <h3>New Question</h3>
     </div>
   </div>
-  {% include "asker/include/question.html" %}
-  {% include "asker/include/question.html" %}
-  {% include "asker/include/question.html" %}
-  {% include "asker/include/pageNavigation.html" %}
+  {% include "asker/include/askForm.html" %}
 {% endblock %}
 
 {% block tags %}

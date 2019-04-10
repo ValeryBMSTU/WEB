@@ -1,11 +1,12 @@
 {% block content %}
+{% load static %}
   <div class="media border mt-3">
     <div class="ml-1 mt-1">
-      <img src="static/img/noAvatarIcon.png" class="img-fluid mb-1" alt="generic placeholder">
+      <img src="{% static 'img/noAvatarIcon.png' %}" class="img-fluid mb-1" alt="generic placeholder">
       <p>
         42    
-        <a href="#"><img src="static/img/like.jpg" width="16" height="16" class="mr-1 ml-1" alt="generic placeholder"></a>
-        <a href="#"><img src="static/img/dislike.jpg" width="16" height="16" class="mr-0" alt="generic placeholder"></a>
+        <a href="#"><img src="{% static 'img/like.jpg' %}" width="16" height="16" class="mr-1 ml-1" alt="generic placeholder"></a>
+        <a href="#"><img src="{% static 'img/dislike.jpg' %}" width="16" height="16" class="mr-0" alt="generic placeholder"></a>
       </p>
     </div>
     <div class="media-body ml-3 mt-1 mb-1">

@@ -1,12 +1,10 @@
 {% extends "asker/base.html" %}
-{% load staticfiles %}
-
 {% block title %}
 <title>index</title>
 {% endblock %}
 
 {% block user %}
-{% include "asker/include/notAuthorized.html" %}
+{% include "asker/include/Authorized.html" %}
 {% endblock %}
 
 {% block mainContent %}

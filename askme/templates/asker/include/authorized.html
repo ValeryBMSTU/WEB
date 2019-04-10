@@ -1,7 +1,8 @@
 {% block content %}
+{% load static %}
 <form>
   <div class="media">
-    <img src="static/img/noAvatarIcon.png" class="img-fluid" alt="generic placeholder">
+    <img src="{% static 'img/noAvatarIcon.png' %}" class="img-fluid mr-3" alt="generic placeholder">
     <div class="media-body">
       <h5 class="text-light">Dr Beer</h5>
       <div clas="container">
