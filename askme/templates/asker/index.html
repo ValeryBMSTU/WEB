@@ -1,4 +1,17 @@
 {% extends "asker/base.html" %}
-{% block content %}
-123
+
+{% block title %}
+<title>index</title>
+{% endblock %}
+
+{% block user %}
+{% include "asker/include/notAuthorized.html" %}
+{% endblock %}
+
+{% block mainContent %}
+someContent
+{% endblock %}
+
+{% block tags %}
+{% include "asker/include/tags.html" %}
 {% endblock %}
