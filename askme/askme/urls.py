@@ -20,5 +20,6 @@ from asker import views
 
 urlpatterns = [
     path('', views.index, name="index"),
-    path('admin/', admin.site.urls),
+    path('tag', views.tag, name="tag"),
+    path('admin/', admin.site.urls)
 ]

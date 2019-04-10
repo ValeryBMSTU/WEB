@@ -7,3 +7,9 @@ def index(request):
         'asker/index.html',
         {"asker": []}
     )
+def tag(request):
+    return render(
+        request,
+        'asker/tag.html',
+        {"asker": []}
+    )
