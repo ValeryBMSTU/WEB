@@ -43,3 +43,9 @@ def registration(request):
         'asker/registration.html',
         {"asker": []}
     )
+def users(request):
+    return render(
+        request,
+        'asker/users.html',
+        {"asker": []}
+    )
