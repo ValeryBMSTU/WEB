@@ -1,0 +1,20 @@
+{% extends "asker/base.html" %}
+
+{% block title %}
+<title>ask</title>
+{% endblock %}
+
+{% block user %}
+{% include "asker/include/Authorized.html" %}
+{% endblock %}
+
+{% block mainContent %}
+  {% for ask in object_list %}
+    <a href="/asks/{{ask.id}}"><h3>{{ask.Title}}</h3></a>
+    <h5>{{ask.Text}}</h5>
+  {% endfor %}
+{% endblock %}
+
+{% block tags %}
+{% include "asker/include/tags.html" %}
+{% endblock %}

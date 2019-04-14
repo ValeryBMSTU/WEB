@@ -1,0 +1,26 @@
+{% extends "asker/base.html" %}
+{% load staticfiles %}
+
+{% block title %}
+<title>ask</title>
+{% endblock %}
+
+{% block user %}
+{% include "asker/include/notAuthorized.html" %}
+{% endblock %}
+
+{% block mainContent %}
+  <div class="row align-items-center">
+    <div class="col-auto">
+      <h3>New Question</h3>
+    </div>
+  </div>
+  {% include "asker/include/askForm.html" %}
+  {% for val in values %}
+  <p>{{val}}</p>
+  {% endfor %}
+{% endblock %}
+
+{% block tags %}
+{% include "asker/include/tags.html" %}
+{% endblock %}
