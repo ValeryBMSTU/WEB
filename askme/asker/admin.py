@@ -1,6 +1,9 @@
 from django.contrib import admin
-from asker.models import Ask, Question, Tag
+from asker.models import Answer, Question, Tag, User, Status, Category
 
-admin.site.register(Ask)
 admin.site.register(Question)
+admin.site.register(Category)
+admin.site.register(Status)
 admin.site.register(Tag)
+admin.site.register(Answer)
+admin.site.register(User)

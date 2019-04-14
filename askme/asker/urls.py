@@ -1,7 +1,7 @@
 from django.conf.urls import url, include
 from django.urls import path
 from django.views.generic import ListView, DetailView
-from asker.models import Ask, Question, Tag
+from asker.models import Answer, Question, Tag
 from . import views
 
 urlpatterns = [
