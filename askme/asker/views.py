@@ -17,7 +17,7 @@ def ask(request):
     return render(
         request,
         'asker/ask.html',
-        {"asker": []}
+        {"values": ['Какая-то дичь', '8-916-416-86-67']}
     )
 def question(request):
     return render(
