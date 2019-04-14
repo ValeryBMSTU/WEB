@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.views.generic import ListView, DetailView
-from asker.models import Asks
+from asker.models import Ask, Question, Tag
 from asker import views
 
 urlpatterns = [
