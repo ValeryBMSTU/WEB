@@ -1,3 +1,5 @@
 from django.contrib import admin
+from asker.models import Asks
 
-# Register your models here.
+admin.site.register(Ask)
+admin.site.register(Question)

@@ -1,10 +1,24 @@
 from django.db import models
 
-class Users(models.Model):
-    Login = models.CharField(max_length = 20)
-    Emain = models.CharField(max_length = 20)
-    NickName = models.CharField(max_length = 20)
-    Password = models.CharField(max_length = 32)
+class Question(models.Model):
+    Title = models.CharField(max_length = 64)
+    Text = models.TextField()
+    Autor = models.CharField(max_length = 20)
+    CreateDate = models.DateTimeField()
 
     def __str__(self):
-        return self.NickName
+        return self.Title
+
+class Ask(models.Model):
+    Title = models.CharField(max_length = 64)
+    Text = models.TextField()
+    Autor = models.CharField(max_length = 20)
+
+    def __str__(self):
+        return self.Title
+
+class Tag(models.Model):
+    TagName = models.CharField(max_length = 20, unique = True)
+
+    def __str__(self):
+        return self.TagName
