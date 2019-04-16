@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from datetime import datetime
 
 class QuestionManager(models.Manager):
     def best_question(self):
@@ -22,6 +23,7 @@ class Status(models.Model):
     views = models.IntegerField(default = 0)
     likeDislikeBalance = models.IntegerField(default = 0)
 
+
 class Tag(models.Model):
     tagName = models.CharField(max_length = 16, unique = True)
     def __str__(self):
@@ -30,8 +32,7 @@ class Tag(models.Model):
 class Question(models.Model):
     title = models.CharField(max_length = 128)
     text = models.TextField()
-    createDate = models.DateTimeField()
-    status = models.OneToOneField(Status, on_delete = models.PROTECT)
+    createDate = models.DateTimeField(default = datetime.now)
     user = models.ForeignKey(User, on_delete = models.PROTECT)
     category = models.ForeignKey(Category, null = True, on_delete = models.PROTECT)
     tags = models.ManyToManyField(Tag)
@@ -63,5 +64,32 @@ class Profile(models.Model):
         return self.login
     def get_absolute_url(self):
         return '/users/%d/' % self.pk
-    
+
+class QuestionLike(models.Model):
+    question = models.ForeignKey(Question, on_delete = models.CASCADE)
+    user = models.ForeignKey(User, on_delete = models.CASCADE)
+
+    class Meta:
+        unique_together = ('question', 'user',)
+
+class QuestionDislike(models.Model):
+    question = models.ForeignKey(Question, on_delete = models.CASCADE)
+    user = models.ForeignKey(User, on_delete = models.CASCADE)
+
+    class Meta:
+        unique_together = ('question', 'user',)
+
+class AnswerLike(models.Model):
+    answer = models.ForeignKey(Answer, on_delete = models.CASCADE)
+    user = models.ForeignKey(User, on_delete = models.CASCADE)
+
+    class Meta:
+        unique_together = ('answer', 'user',)
+
+class AnswerDislike(models.Model):
+    answer = models.ForeignKey(Answer, on_delete = models.CASCADE)
+    user = models.ForeignKey(User, on_delete = models.CASCADE)
+
+    class Meta:
+        unique_together = ('answer', 'user',)
 

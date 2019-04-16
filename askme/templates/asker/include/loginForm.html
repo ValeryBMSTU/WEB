@@ -1,44 +1,38 @@
 {% block content %}
 {% load static %}
-<div class="row mt-2">
-    <div class="col-3">
-        <label class="mr" for="inputPassword4">Login</label>
+<form class="needs-validation">
+    <div class="row mt-2">
+      <div class="col-3">
+        <label class="mr" for="login">Login</label>
+      </div>
+      <div class="input-group col-md-5">
+        <input id="login" type="text" class="form-control" required>
+      </div>
     </div>
-    <div class="col">
-        <form class="form-inline">
-            <input type="text" id="inputPassword4" class="form-control" aria-describedby="passwordHelpInline">
-        </form>
-    </div>
-</div>
-<div class="row mt-2">
-    <div class="col-3">
+    <div class="row mt-2">
+      <div class="col-3">
         <label class="mr" for="inputPassword4">Password</label>
+      </div>
+      <div class="input-group col-md-5">
+        <input type="password" class="form-control">
+      </div>
     </div>
-    <div class="col">
-        <form class="form-inline">
-            <input type="password" id="inputPassword4" class="form-control" aria-describedby="passwordHelpInline">
-        </form>
-    </div>
-</div>
-<div class="row mt-2">
-    <div class="col-3">
+    <div class="row mt-2">
+      <div class="col-3">
         <label class="mr" for="inputPassword4"></label>
+      </div>
+      <div class="input-group col-md-5">
+        <button type="submit" class="btn btn-primary">Log in!</button>
+      </div>
     </div>
-    <div class="col">
-        <form class="form-inline">
-            <button type="submit" class="btn btn-primary">Log in!</button>
-        </form>
-    </div>
-</div>
-<div class="row mt-2">
-    <div class="col-3">
-        <label class="mr" for="inputPassword4"></label>
-    </div>
-    <div class="col">
-        <form class="form-inline">
-            <a href="#">register</a>
-        </form>
-    </div>
-</div>
+    <div class="row mt-2">
+        <div class="col-3">
+          <label class="mr" for="inputPassword4"></label>
+        </div>
+        <div class="input-group col-md-5">
+          <a href="#">create new account</a>
+        </div>
+      </div>
+  </form>
 
 {% endblock %}

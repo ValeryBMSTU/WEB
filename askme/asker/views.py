@@ -54,14 +54,13 @@ def users(request):
         {"asker": []}
     )
 
-
-
 def questions_detail(request, question_id):
     return render(
         request, 
-        'questions_detail.html', 
+        'questionDetail.html', 
         {'question': get_object_or_404(Question, pk=question_id)}
     )
+
 
 class QuestionByDateView(ListView):
     template_name = 'asker/questionsBydate.html'
@@ -83,6 +82,7 @@ class QuestionByDateView(ListView):
         context['tag_list'] = Tag.objects.all()
         return context
 
+
 class QuestionByRateView(ListView):
     template_name = 'asker/questionsByRate.html'
 
@@ -102,6 +102,7 @@ class QuestionByRateView(ListView):
             context['question_list'] = Question.objects.filter(tags__text__exact=tag_name)
         context['tag_list'] = Tag.objects.all()
         return context
+
 
 class QuestionByTagView(ListView):
     template_name = 'asker/questionsByTag.html'
