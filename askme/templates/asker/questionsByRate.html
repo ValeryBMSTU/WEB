@@ -1,0 +1,23 @@
+{% extends "asker/base.html" %}
+
+{% block title %}
+<title>questions</title>
+{% endblock %}
+
+{% block user %}
+{% include "asker/include/Authorized.html" %}
+{% endblock %}
+
+{% block mainContent %}
+    {% if question_list %}
+        {% for question in question_list %}
+            {% include "asker/include/question.html" %}
+        {% endfor %}
+    {% else %}
+        <h1>NO QUESTIONS AVAILABLE</h1>
+    {% endif %}
+{% endblock %}
+
+{% block tags %}
+{% include "asker/include/tags.html" %}
+{% endblock %}

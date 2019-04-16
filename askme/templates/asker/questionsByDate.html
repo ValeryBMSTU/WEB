@@ -1,7 +1,7 @@
 {% extends "asker/base.html" %}
 
 {% block title %}
-<title>ask</title>
+<title>questions</title>
 {% endblock %}
 
 {% block user %}
@@ -9,10 +9,13 @@
 {% endblock %}
 
 {% block mainContent %}
-  {% for ask in object_list %}
-    <a href="/asks/{{ask.id}}"><h3>{{ask.Title}}</h3></a>
-    <h5>{{ask.Text}}</h5>
-  {% endfor %}
+    {% if question_list %}
+        {% for question in question_list %}
+            {% include "asker/include/question.html" %}
+        {% endfor %}
+    {% else %}
+        <h1>NO QUESTIONS AVAILABLE</h1>
+    {% endif %}
 {% endblock %}
 
 {% block tags %}

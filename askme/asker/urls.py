@@ -5,13 +5,18 @@ from asker.models import Answer, Question, Tag, User, Status, Category
 from . import views
 
 urlpatterns = [
-    path('index/', views.index, name='index'),
+    path('index/', views.index, name="index"),
     path('tag/', views.tag, name="tag"),
     path('ask/', views.ask, name="ask"),
     path('question/', views.question, name="question"),
     path('settings/', views.settings, name="settings"),
     path('login/', views.login, name="login"),
     path('registration/', views.registration, name="registration"),
-    #path('asks/', ListView.as_view(queryset=Asks.objects.all().order_by("Title")[:20], template_name="asker/asks.html"))
+    path('admin/', admin.site.urls),
+    path('users/', views.users, name="users"),
+    path('questionsByDate/', views.QuestionByDateView.as_view(), name='questionsByDate'),
+    path('questionsByRate/', views.QuestionByRateView.as_view(), name='questionsByRate'),
+    path('questionsByTag/', views.QuestionByTagView.as_view(), name='questionsByTag'),
+    #path('questions/', ListView.as_view(queryset=Question.objects.all().order_by("title")[:20], template_name="asker/questions.html"))
     #path("user/<int:pk>", DetailView.as_view(model = User, template_name = "user.html"))
 ]

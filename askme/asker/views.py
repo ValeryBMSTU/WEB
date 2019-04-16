@@ -1,5 +1,9 @@
 from django.shortcuts import render
-# Create your views here.
+from django.views.generic import ListView, DetailView
+from django.views.generic.edit import FormView, FormMixin
+from django.http import HttpResponse
+from django.db import transaction
+from asker.models import Question, Answer, Tag, Status, Category
 
 def index(request):
     return render(
@@ -49,3 +53,67 @@ def users(request):
         'asker/users.html',
         {"asker": []}
     )
+
+
+
+def questions_detail(request, question_id):
+    return render(
+        request, 
+        'questions_detail.html', 
+        {'question': get_object_or_404(Question, pk=question_id)}
+    )
+
+class QuestionByDateView(ListView):
+    template_name = 'asker/questionsBydate.html'
+
+    model = Question
+    context_object_name = 'question_list'
+
+    paginate_by = 10
+
+    def get_queryset(self):
+        return Question.objects.order_by('-createDate')
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        tag_name = self.request.GET.get('tag')
+        if tag_name is not None:
+            context['tag_query'] = tag_name
+            context['question_list'] = Question.objects.filter(tags__text__exact=tag_name)
+        context['tag_list'] = Tag.objects.all()
+        return context
+
+class QuestionByRateView(ListView):
+    template_name = 'asker/questionsByRate.html'
+
+    model = Question
+    context_object_name = 'question_list'
+
+    paginate_by = 10
+
+    def get_queryset(self):
+        return Question.objects.order_by('-likeDislikeBalance')
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        tag_name = self.request.GET.get('tag')
+        if tag_name is not None:
+            context['tag_query'] = tag_name
+            context['question_list'] = Question.objects.filter(tags__text__exact=tag_name)
+        context['tag_list'] = Tag.objects.all()
+        return context
+
+class QuestionByTagView(ListView):
+    template_name = 'asker/questionsByTag.html'
+    context_object_name = 'question_list'
+
+    paginate_by = 10
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data()
+        context['tag_list'] = Tag.objects.all()
+        return context
+
+    def get_queryset(self):
+        return Question.objects.filter(tags__text__exact=self.kwargs['tag_name'])
+
