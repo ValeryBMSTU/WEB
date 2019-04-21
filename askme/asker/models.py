@@ -65,31 +65,16 @@ class Profile(models.Model):
     def get_absolute_url(self):
         return '/users/%d/' % self.pk
 
-class QuestionLike(models.Model):
-    question = models.ForeignKey(Question, on_delete = models.CASCADE)
+class Like(models.Model):
+    post = models.ForeignKey(Question, on_delete = models.CASCADE)
     user = models.ForeignKey(User, on_delete = models.CASCADE)
 
     class Meta:
-        unique_together = ('question', 'user',)
+        unique_together = ('post', 'user',)
 
-class QuestionDislike(models.Model):
-    question = models.ForeignKey(Question, on_delete = models.CASCADE)
+class Dislike(models.Model):
+    post = models.ForeignKey(Question, on_delete = models.CASCADE)
     user = models.ForeignKey(User, on_delete = models.CASCADE)
 
     class Meta:
-        unique_together = ('question', 'user',)
-
-class AnswerLike(models.Model):
-    answer = models.ForeignKey(Answer, on_delete = models.CASCADE)
-    user = models.ForeignKey(User, on_delete = models.CASCADE)
-
-    class Meta:
-        unique_together = ('answer', 'user',)
-
-class AnswerDislike(models.Model):
-    answer = models.ForeignKey(Answer, on_delete = models.CASCADE)
-    user = models.ForeignKey(User, on_delete = models.CASCADE)
-
-    class Meta:
-        unique_together = ('answer', 'user',)
-
+        unique_together = ('post', 'user',)
