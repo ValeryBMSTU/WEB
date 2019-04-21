@@ -1,7 +1,7 @@
 {% extends "asker/base.html" %}
 {% load static %}
 {% block title %}
-<title>index</title>
+<title>questions</title>
 {% endblock %}
 
 {% block user %}
@@ -36,7 +36,10 @@
             New <a href="#">answer (3)</a>
           </div>
           <div class="col">
-            Tags: <a href="#">balck-jack</a> <a href="#">bender</a>
+            Tags:
+            {% for tag in question.tags.all %}
+            <a href="{{ tag.get_absolute_url }}">{{tag.tagName}} </a>
+            {% endfor %}
           </div>
         </div>
       </div>

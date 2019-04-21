@@ -17,12 +17,14 @@ def questionDetail(request, slug):
     question = Question.objects.get(slug__iexact=slug)
     return render(request, 'asker/questionDetail.html', context={'question': question})
 
-def tag(request):
-    return render(
-        request,
-        'asker/tag.html',
-        {"asker": []}
-    )
+def tags(request):
+    tags = Tag.objects.all()
+    return render(request, 'asker/tags.html', context={'tags': tags})
+
+def tag(request, pk):
+    tag = Tag.objects.get(pk=pk)
+    return render(request, 'asker/tag.html', context={'tag': tag})
+
 def ask(request):
     return render(
         request,

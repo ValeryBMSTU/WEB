@@ -1,0 +1,28 @@
+{% extends "asker/base.html" %}
+{% load static %}
+{% block title %}
+<title>tags</title>
+{% endblock %}
+
+{% block user %}
+{% include "asker/include/Authorized.html" %}
+{% endblock %}
+
+{% block mainContent %}
+  <div class="row align-items-center">
+    <div class="col-auto">
+      <h3>New Questions</h3>
+    </div>
+    <div class="col">
+      <a href="#">Hot Questions</a>
+    </div>
+  </div>
+  {% for tag in tags %}
+  <a href="{{ tag.get_absolute_url }}"><h5>{{tag.tagName}}</h5></a>
+  {% endfor %}
+  {% include "asker/include/pageNavigation.html" %}
+{% endblock %}
+
+{% block tags %}
+{% include "asker/include/tags.html" %}
+{% endblock %}

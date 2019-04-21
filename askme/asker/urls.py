@@ -7,8 +7,9 @@ urlpatterns = [
     path('index/', index, name="index"),
     path('questions/', questions, name='questions'),
     path('questions/<str:slug>/', questionDetail, name='questionDetail'),
+    path('tags/', tags, name='tags'),
+    path('tags/<int:pk>/', tag, name="tag"),
 
-    path('tag/', tag, name="tag"),
     path('ask/', ask, name="ask"),
     path('question/', question, name="question"),
     path('settings/', settings, name="settings"),
