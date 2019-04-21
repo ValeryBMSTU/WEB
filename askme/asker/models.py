@@ -2,9 +2,6 @@ import requests
 from django.db import models
 from django.shortcuts import reverse
 from django.contrib.auth.models import User
-from django.db.models.signals import post_save
-from django.dispatch import receiver
-from datetime import datetime
 
 class QuestionManager(models.Manager):
     def best_question(self):
@@ -31,7 +28,7 @@ class Tag(models.Model):
         return self.tagName
 
     def get_absolute_url(self):
-        return reverse('tag', kwargs={'pk': self.pk})
+        return reverse('tagDetail', kwargs={'pk': self.pk})
 
 class Question(models.Model):
     title = models.CharField(max_length = 128, db_index=True)
@@ -46,7 +43,7 @@ class Question(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('questionDetail', kwargs={'slug': self.slug})
+        return reverse('questionDetail', kwargs={'pk': self.pk})
 
 class Answer(models.Model):
     text = models.TextField()
