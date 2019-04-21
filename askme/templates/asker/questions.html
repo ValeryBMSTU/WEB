@@ -28,7 +28,7 @@
       </p>
     </div>
     <div class="media-body ml-3 mt-1 mb-1">
-      <a href="{% url 'questionDatail' slug=question.slug %}"><h5>{{question.title}}</h5></a>
+      <a href="{{ question.get_absolute_url }}"><h5>{{question.title}}</h5></a>
       <p>{{question.text}}</p>
       <div clas="container">
         <div class="row">

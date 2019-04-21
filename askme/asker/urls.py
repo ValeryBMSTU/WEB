@@ -6,7 +6,7 @@ from django.views.generic import ListView, DetailView
 urlpatterns = [
     path('index/', index, name="index"),
     path('questions/', questions, name='questions'),
-    path('questions/<str:slug>/', questionDetail, name='questionDatail'),
+    path('questions/<str:slug>/', questionDetail, name='questionDetail'),
 
     path('tag/', tag, name="tag"),
     path('ask/', ask, name="ask"),

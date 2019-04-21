@@ -1,5 +1,6 @@
 import requests
 from django.db import models
+from django.shortcuts import reverse
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -37,14 +38,12 @@ class Question(models.Model):
     user = models.ForeignKey(User, on_delete = models.PROTECT)
     category = models.ForeignKey(Category, null = True, on_delete = models.PROTECT)
     tags = models.ManyToManyField(Tag)
-    #objects = QuestionManager()
-    #objects =  models.Manager()
 
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('questionDetail', kwagrs={'pk': self.pk})
+        return reverse('questionDetail', kwargs={'slug': self.slug})
 
 class Answer(models.Model):
     text = models.TextField()
