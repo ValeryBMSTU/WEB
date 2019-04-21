@@ -30,9 +30,10 @@ class Tag(models.Model):
         return self.tagName
 
 class Question(models.Model):
-    title = models.CharField(max_length = 128)
+    title = models.CharField(max_length = 128, db_index=True)
     text = models.TextField()
-    createDate = models.DateTimeField(default = datetime.now)
+    slug = models.SlugField(max_length=128, unique=True)
+    createDate = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete = models.PROTECT)
     category = models.ForeignKey(Category, null = True, on_delete = models.PROTECT)
     tags = models.ManyToManyField(Tag)
@@ -43,7 +44,7 @@ class Question(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('question_detail', args=[self.pk])
+        return reverse('questionDetail', kwagrs={'pk': self.pk})
 
 class Answer(models.Model):
     text = models.TextField()

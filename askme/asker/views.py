@@ -3,14 +3,20 @@ from django.views.generic import ListView, DetailView
 from django.views.generic.edit import FormView, FormMixin
 from django.http import HttpResponse
 from django.db import transaction
-from asker.models import Question, Answer, Tag, Status, Category
+from asker.models import *
 
 def index(request):
-    return render(
-        request,
-        'asker/index.html',
-        {"asker": []}
-    )
+    questions = Question.objects.all()
+    return render(request, 'asker/index.html', context = {'questions': questions})
+
+def questions(request):
+    questions = Question.objects.all()
+    return render(request, 'asker/questions.html', context = {'questions': questions})
+
+def questionDetail(request, slug):
+    question = Question.objects.get(slug__iexact=slug)
+    return render(request, 'asker/questionDetail.html', context={'question': question})
+
 def tag(request):
     return render(
         request,
