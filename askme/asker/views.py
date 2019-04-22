@@ -3,9 +3,9 @@ from django.views.generic import View
 from .models import *
 from .utils import ObjectsDetailMixing
 
-def index(request):
-    questions = Question.objects.all()
-    return render(request, 'asker/index.html', context = {'questions': questions})
+# def index(request):
+#     questions = Question.objects.all()
+#     return render(request, 'asker/index.html', context = {'questions': questions})
 
 # def questions(request):
 #     questions = Question.objects.all()
@@ -55,12 +55,12 @@ def index(request):
 #         {"asker": []}
 #     )
 
-class Users(view):
+class Users(View):
 
     def get(self, request):
         return render(request, 'asker/users.html', context={})
 
-class Registration(view):
+class Registration(View):
 
     def get(self, request):
         return render(request, 'asker/registration.html', context={})
@@ -83,7 +83,19 @@ class Ask(View):
 class Questions(View):
 
     def get(self, request):
+        questions = Question.objects.all()
+        return render(request, 'asker/questions.html', context={'questions': questions})
+
+class NewQuestions(View):
+
+    def get(self, request):
         questions = Question.objects.order_by("-createDate")
+        return render(request, 'asker/questions.html', context={'questions': questions})
+
+class HotQuestions(View):
+
+    def get(self, request):
+        questions = Question.objects.all()
         return render(request, 'asker/questions.html', context={'questions': questions})
 
 class QuestionDetail(View):
@@ -96,7 +108,7 @@ class QuestionDetail(View):
 
 class Tags(View):
 
-    def get(self, equest):
+    def get(self, request):
         tags = Tag.objects.all()
         return render(request, 'asker/tags.html', context={'tags': tags})
 
@@ -104,8 +116,8 @@ class Tags(View):
 class TagDetail(View):
     # model = Tag
     # template = 'asker/tagDetail.html'
-    def get(self, request, pk):
+    def get(self, request, slug):
         # tag = Tag.objects.get(pk=pk)
-        tag = get_object_or_404(Tag, pk=pk)
+        tag = get_object_or_404(Tag, slug=slug)
         return render(request, 'asker/tagDetail.html', context={'tag': tag})
 

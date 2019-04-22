@@ -24,11 +24,12 @@ class Status(models.Model):
 
 class Tag(models.Model):
     tagName = models.CharField(max_length = 16, unique = True)
+    slug = models.SlugField(max_length=128)
     def __str__(self):
         return self.tagName
 
     def get_absolute_url(self):
-        return reverse('tagDetail', kwargs={'pk': self.pk})
+        return reverse('TagDetail', kwargs={'slug': self.slug})
 
 class Question(models.Model):
     title = models.CharField(max_length = 128, db_index=True)
@@ -43,7 +44,7 @@ class Question(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('questionDetail', kwargs={'pk': self.pk})
+        return reverse('QuestionDetail', kwargs={'pk': self.pk})
 
 class Answer(models.Model):
     text = models.TextField()
@@ -62,19 +63,22 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.login
+
     def get_absolute_url(self):
         return '/users/%d/' % self.pk
 
-class Like(models.Model):
-    post = models.ForeignKey(Question, on_delete = models.CASCADE)
-    user = models.ForeignKey(User, on_delete = models.CASCADE)
+class QuestionLikeDisLike(models.Model):
+    likeDisLike = models.IntegerField()
+    question = models.ForeignKey(Question, on_delete = models.CASCADE, related_name="likes", null=True)
+    user = models.ForeignKey(User, on_delete = models.CASCADE, related_name='likes')
 
     class Meta:
-        unique_together = ('post', 'user',)
+        unique_together = ('question', 'user',)
 
-class Dislike(models.Model):
-    post = models.ForeignKey(Question, on_delete = models.CASCADE)
-    user = models.ForeignKey(User, on_delete = models.CASCADE)
+class AnswerLikeDisLike(models.Model):
+    likeDisLike = models.IntegerField()
+    answer = models.ForeignKey(Answer, on_delete = models.CASCADE, related_name="disLikes", null=True)
+    user = models.ForeignKey(User, on_delete = models.CASCADE, related_name='disLikes')
 
     class Meta:
-        unique_together = ('post', 'user',)
+        unique_together = ('answer', 'user',)
