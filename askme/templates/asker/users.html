@@ -1,16 +1,24 @@
 {% extends "asker/base.html" %}
 
 {% block title %}
-<title>user</title>
+  <title>user</title>
 {% endblock %}
 
-{% block user %}
-{% include "asker/include/Authorized.html" %}
+{% block Autorization %}
+  {% include "asker/include/Authorized.html" %}
 {% endblock %}
 
 {% block mainContent %}
+  <div class="row align-items-center">
+    <div class="col-auto">
+      <h3>Users:</h3>
+    </div>
+  </div>
+  {% for user in users %}
+    {% include "asker/include/user.html" %}
+  {% endfor %}
 {% endblock %}
 
 {% block tags %}
-{% include "asker/include/tags.html" %}
+  {% include "asker/include/tags.html" %}
 {% endblock %}

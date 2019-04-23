@@ -2,64 +2,21 @@
 <div class="container mb-3 pl-0">
   <h2>Popular Tags</h2>
   <div class="row">
+    {% for tag in tags %}
     <div class="col">
-      perl
+      <a href="{{ tag.get_absolute_url }}">{{tag}}</a>
     </div>
-    <div class="col">
-      python
-    </div>
-    <div class="col">
-      Technopark
-    </div>
-  </div>
-  <div class="row">
-    <div class="col">
-      MySQL
-    </div>
-    <div class="col">
-      django
-    </div>
-    <div class="col">
-    </div>
-  </div>
-  <div class="row">
-    <div class="col">
-      Mail.ru
-    </div>
-    <div class="col">
-      Voloshin
-    </div>
-    <div class="col">
-      Firefox
-    </div>
+    {% endfor %}
   </div>
 </div>
 <div class="container mb-3 pl-0">
   <h2>Best Members</h2>
+  {% for user in users %}
   <div class="row">
     <div class="col">
-      <a href="#">Mr. Freeman</a>
+      <a href="#">{{user}}</a>
     </div>
   </div>
-  <div class="row">
-    <div class="col">
-      <a href="#">Dr. Hous</a>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col">
-      <a href="#">Bender</a>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col">
-      <a href="#">Queen Victoria</a>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col">
-      <a href="#">V. Pupkin</a>
-    </div>
-  </div>
+  {% endfor %}
 </div>
 {% endblock %}

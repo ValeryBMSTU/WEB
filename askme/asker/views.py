@@ -1,123 +1,63 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import View
 from .models import *
-from .utils import ObjectsDetailMixing
+from django.core.paginator import Paginator
+from .utils import *
 
-# def index(request):
-#     questions = Question.objects.all()
-#     return render(request, 'asker/index.html', context = {'questions': questions})
+class Users(TagsAndUsersMixing, View):
+    template = 'asker/users.html' 
 
-# def questions(request):
-#     questions = Question.objects.all()
-#     return render(request, 'asker/questions.html', context = {'questions': questions})
+class Registration(TagsAndUsersMixing, View):
+    template = 'asker/registration.html'
 
-# def questionDetail(request, slug):
-#     question = Question.objects.get(slug__iexact=slug)
-#     return render(request, 'asker/questionDetail.html', context={'question': question})
+class Login(TagsAndUsersMixing, View):
+    template = 'asker/login.html'
 
-# def tags(request):
-#     tags = Tag.objects.all()
-#     return render(request, 'asker/tags.html', context={'tags': tags})
+class Settings(TagsAndUsersMixing, View):
+    template = 'asker/settings.html'
 
-# def tagDetail(request, pk):
-#     tag = Tag.objects.get(pk=pk)
-#     return render(request, 'asker/tagDetail.html', context={'tag': tag})
+class Ask(TagsAndUsersMixing, View):
+    template = 'asker/ask.html'
 
-# def ask(request):
-#     return render(
-#         request,
-#         'asker/ask.html',
-#         {"values": ['Какая-то дичь', '8-916-416-86-67']}
-#     )
+class Questions(PaginatorMixing, View):
+    model = Question
+    header = 'Questions:'
+    template = 'asker/questions.html'
 
-# def settings(request):
-#     return render(
-#         request,
-#         'asker/settings.html',
-#         {"asker": []}
-#     )
-# def login(request):
-#     return render(
-#         request,
-#         'asker/login.html',
-#         {"asker": []}
-#     )
-# def registration(request):
-#     return render(
-#         request,
-#         'asker/registration.html',
-#         {"asker": []}
-#     )
-# def users(request):
-#     return render(
-#         request,
-#         'asker/users.html',
-#         {"asker": []}
-#     )
+class NewQuestions(PaginatorMixing, View):
+    model = Question
+    header = 'New Questions:'
+    template = 'asker/questions.html'
 
-class Users(View):
+class HotQuestions(PaginatorMixing, View):
+    model = Question
+    header = 'Hot Questions:'
+    template = 'asker/questions.html'
 
-    def get(self, request):
-        return render(request, 'asker/users.html', context={})
-
-class Registration(View):
-
-    def get(self, request):
-        return render(request, 'asker/registration.html', context={})
-
-class Login(View):
-
-    def get(self, request):
-        return render(request, 'asker/login.html', context={})
-
-class Settings(View):
-
-    def get(self, request):
-        return render(request, 'asker/settings.html', context={})
-
-class Ask(View):
-
-    def get(self, request):
-        return render(request, 'asker/ask.html', context={})
-
-class Questions(View):
-
-    def get(self, request):
-        questions = Question.objects.all()
-        return render(request, 'asker/questions.html', context={'questions': questions})
-
-class NewQuestions(View):
-
-    def get(self, request):
-        questions = Question.objects.order_by("-createDate")
-        return render(request, 'asker/questions.html', context={'questions': questions})
-
-class HotQuestions(View):
-
-    def get(self, request):
-        questions = Question.objects.all()
-        return render(request, 'asker/questions.html', context={'questions': questions})
+class Tags(TagsAndUsersMixing, View):
+    template = 'asker/tags.html'
 
 class QuestionDetail(View):
-    # model = Question
-    # template = 'asker/questionDetail.html'
+
     def get(self, request, pk):
-        # question = Question.objects.get(pk=pk)
         question = get_object_or_404(Question, pk=pk)
-        return render(request, 'asker/questionDetail.html', context={'question': question})
-
-class Tags(View):
-
-    def get(self, request):
+        answers = question.answers.all()
         tags = Tag.objects.all()
-        return render(request, 'asker/tags.html', context={'tags': tags})
+        users = User.objects.all()
+
+        return render(request, 'asker/questionDetail.html', context={'question': question, 'answers': answers, 'tags': tags, 'users': users})
 
 
 class TagDetail(View):
-    # model = Tag
-    # template = 'asker/tagDetail.html'
     def get(self, request, slug):
-        # tag = Tag.objects.get(pk=pk)
         tag = get_object_or_404(Tag, slug=slug)
-        return render(request, 'asker/tagDetail.html', context={'tag': tag})
+        questionsList = tag.questions.all()
+        tags = Tag.objects.all()
+        users = User.objects.all()
+
+        paginator = Paginator(questionsList, 2)
+        page = request.GET.get('page')
+        questions = paginator.get_page(page)
+
+        return render(request, 'asker/tagDetail.html', context={'questions': questions, 'tag': tag, 'tags': tags, 'users': users})
 

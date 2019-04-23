@@ -4,19 +4,22 @@
 <title>question detail</title>
 {% endblock %}
 
-{% block user %}
+{% block Autorization %}
 {% include "asker/include/Authorized.html" %}
 {% endblock %}
 
 {% block mainContent %}
-{% include "asker/include/questionPost.html" %}
-{% include "asker/include/answer.html" %}
-{% include "asker/include/answer.html" %}
-<hr>
-<div class="form-group">
-  <textarea class="form-control" id="exampleTextarea" rows="10" placeholder="Введите свой ответ"></textarea>
-</div>
-<button type="submit" class="btn btn-primary">Answer</button>
+  {% include "asker/include/questionPost.html" %}
+  {% for answer in answers %}
+    {% include "asker/include/answer.html" %}
+  {% endfor %}
+  <!-- {% include "asker/include/answer.html" %}
+  {% include "asker/include/answer.html" %} -->
+  <hr>
+  <div class="form-group">
+    <textarea class="form-control" id="exampleTextarea" rows="10" placeholder="Введите свой ответ"></textarea>
+  </div>
+  <button type="submit" class="btn btn-primary">Answer</button>
 {% endblock %}
 
 {% block tags %}

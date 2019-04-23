@@ -49,11 +49,11 @@ class Question(models.Model):
 class Answer(models.Model):
     text = models.TextField()
     likeDislikeBalance = models.IntegerField(default = 0)
-    question = models.ForeignKey(Question, null = True, on_delete = models.PROTECT)
-    user = models.ForeignKey(User, on_delete = models.PROTECT)
+    question = models.ForeignKey(Question, null = True, on_delete = models.PROTECT, related_name='answers')
+    user = models.ForeignKey(User, on_delete = models.PROTECT, related_name='answers')
 
     def __str__(self):
-        return self.title
+        return self.text
 
 class Profile(models.Model):
     nickName = models.CharField(max_length = 32)

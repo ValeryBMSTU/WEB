@@ -1,14 +1,14 @@
 {% block content %}
 {% load static %}
 <form>
-  <div class="media">
+  <div class="media ml-5">
     <img src="{% static 'img/noAvatarIcon.png' %}" class="img-fluid mr-3" alt="generic placeholder">
     <div class="media-body">
       <h5 class="text-light">Dr Beer</h5>
       <div clas="container">
         <div class="row">
           <div class="col">
-            <a href="#" class="text-light">Настройки</a>
+            <a class="text-light" href="{% url 'Settings' %}">Настройки</a>
           </div>
           <div class="col">
             <a href="#" class="text-light">Выйти</a>
