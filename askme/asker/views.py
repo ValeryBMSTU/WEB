@@ -1,8 +1,11 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import View
 from .models import *
 from django.core.paginator import Paginator
 from .utils import *
+from asker.forms import LoginForm
+from django import forms
+from django.contrib import auth
 
 class Users(TagsAndUsersMixing, View):
     template = 'asker/users.html' 
@@ -61,3 +64,24 @@ class TagDetail(View):
 
         return render(request, 'asker/tagDetail.html', context={'questions': questions, 'tag': tag, 'tags': tags, 'users': users})
 
+def login(request):
+    if request.POST:
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            cdata = form.cleaned_data
+            user = auth.authenticate(**cdata)
+            if user is not None:
+                auth.login(request, user)
+                return redirect
+            # form.add_error
+    else:
+        form = LoginForm()
+    
+    return render(request, 'asker/login.html', {'form': form})
+
+def logout(request):
+    return redirect('/')
+
+def ask(requests):
+    
+    form = AskForm(request.POST)

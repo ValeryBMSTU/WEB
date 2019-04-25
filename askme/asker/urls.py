@@ -11,6 +11,7 @@ urlpatterns = [
     path('ask/', Ask.as_view(), name="Ask"),
     path('settings/', Settings.as_view(), name="Settings"),
     path('login/', Login.as_view(), name="Login"),
+    # path('login_sem/', login, name="login"),
     path('registration/', Registration.as_view(), name="Registration"),
     path('users/', Users.as_view(), name="Users"),
 ]

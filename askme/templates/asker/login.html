@@ -16,6 +16,10 @@
   </div>
 </div>
 {% include "asker/include/loginForm.html" %}
+<!-- <form action ="{% url 'login' %}" method="POST">
+  {% csrf_token %}
+  {{form}}
+</form> -->
 {% endblock %}
 
 {% block tags %}

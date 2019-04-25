@@ -14,6 +14,7 @@ class Category(models.Model):
 
     def __str__(self):
         return self.categoryType
+        
     def get_absolute_url(self):
         return '/catego/%d/' % self.pk
 
