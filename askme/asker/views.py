@@ -81,6 +81,8 @@ def questionDetail(request, pk):
     question = get_object_or_404(Question, pk=pk)
     header = question.title
 
+    count = question.votes.likes().count()
+
     return paginatorRender(request, question.answers.all(), template, header, question)
 
 def tagDetail(request, slug):

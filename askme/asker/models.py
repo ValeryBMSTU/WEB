@@ -3,6 +3,10 @@ from django.db import models
 from django.shortcuts import reverse
 from django.contrib.auth.models import User
 
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes.fields import GenericRelation
+
 # Managers
 
 class QuestionManager(models.Manager):
@@ -34,6 +38,18 @@ class ProfileManager(models.Manager):
 	def sortByUsername(self, username):
 		return self.all().filter(username=username).first()
 
+class LikeDislikeManager(models.Manager):
+    use_for_related_fields = True
+
+    def likes(self):
+        return self.get_queryset().filter(vote__gt=0)
+
+    def dislikes(self):
+        return self.get_queryset().filter(vote__lt=0)
+
+    def sumRating(self):
+        return self.get_queryset().filter(vote__gt=0).count() - self.get_queryset().filter(vote__lt=0).count()
+
 # Models
 
 class Category(models.Model):
@@ -44,10 +60,6 @@ class Category(models.Model):
         
     def get_absolute_url(self):
         return '/catego/%d/' % self.pk
-
-class Status(models.Model):
-    views = models.IntegerField(default = 0)
-    likeDislikeBalance = models.IntegerField(default = 0)
 
 
 class Tag(models.Model):
@@ -62,6 +74,25 @@ class Tag(models.Model):
     def get_absolute_url(self):
         return reverse('TagDetail', kwargs={'slug': self.slug})
 
+class LikeDislike(models.Model):
+
+    LIKE = 1
+    DISLIKE = -1
+
+    VOTE_TYPES = ((LIKE, 'Like'), (DISLIKE, 'Dislike'))
+
+    user = models.ForeignKey(User, null=True, verbose_name='Like author', on_delete=models.CASCADE)
+    vote = models.SmallIntegerField(verbose_name='is like', default=VOTE_TYPES[0], choices=VOTE_TYPES)
+
+    content_type = models.ForeignKey(ContentType, default=None, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField(default=-1)
+    content_object = GenericForeignKey()
+
+    objects = LikeDislikeManager()
+
+    def __str__(self):
+        return "Like from " + self.user.username
+
 class Question(models.Model):
     title = models.CharField(max_length = 128, db_index=True)
     text = models.TextField()
@@ -70,6 +101,8 @@ class Question(models.Model):
     user = models.ForeignKey(User, on_delete = models.CASCADE)
     category = models.ForeignKey(Category, null = True, on_delete = models.CASCADE)
     tags = models.ManyToManyField('Tag', blank=True, related_name='questions')
+
+    votes = GenericRelation(LikeDislike, related_query_name='questions')
 
     objects = QuestionManager()
 
@@ -104,18 +137,20 @@ class Profile(models.Model):
     def get_absolute_url(self):
         return '/users/%d/' % self.pk
 
-class QuestionLikeDisLike(models.Model):
-    likeDisLike = models.IntegerField()
-    question = models.ForeignKey(Question, on_delete = models.CASCADE, related_name="likes", null=True)
-    user = models.ForeignKey(User, on_delete = models.CASCADE, related_name='likes')
 
-    class Meta:
-        unique_together = ('question', 'user',)
 
-class AnswerLikeDisLike(models.Model):
-    likeDisLike = models.IntegerField()
-    answer = models.ForeignKey(Answer, on_delete = models.CASCADE, related_name="disLikes", null=True)
-    user = models.ForeignKey(User, on_delete = models.CASCADE, related_name='disLikes')
+# class QuestionLikeDisLike(models.Model):
+#     likeDisLike = models.IntegerField()
+#     question = models.ForeignKey(Question, on_delete = models.CASCADE, related_name="likes", null=True)
+#     user = models.ForeignKey(User, on_delete = models.CASCADE, related_name='likes')
 
-    class Meta:
-        unique_together = ('answer', 'user',)
+#     class Meta:
+#         unique_together = ('question', 'user',)
+
+# class AnswerLikeDisLike(models.Model):
+#     likeDisLike = models.IntegerField()
+#     answer = models.ForeignKey(Answer, on_delete = models.CASCADE, related_name="disLikes", null=True)
+#     user = models.ForeignKey(User, on_delete = models.CASCADE, related_name='disLikes')
+
+#     class Meta:
+#         unique_together = ('answer', 'user',)

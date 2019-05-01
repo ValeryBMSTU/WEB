@@ -24,7 +24,9 @@
   {% for obj in object_list %}
   {% include "asker/include/questionPost.html" %}
   {% endfor %}
+  {% if object_list.paginator.num_pages > 1 %}
   {% include "asker/include/pageNavigation.html" %}
+  {% endif %}
 {% endblock %}
 
 {% block tags %}

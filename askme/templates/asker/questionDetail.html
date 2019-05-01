@@ -13,7 +13,9 @@
   {% for obj in object_list %}
     {% include "asker/include/answer.html" %}
   {% endfor %}
+  {% if object_list.paginator.num_pages > 1 %}
   {% include "asker/include/pageNavigation.html" %}
+  {% endif %}
   <hr>
   <div class="form-group">
     <textarea class="form-control" id="exampleTextarea" rows="10" placeholder="Введите свой ответ"></textarea>
