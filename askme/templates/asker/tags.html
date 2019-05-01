@@ -14,8 +14,8 @@
       <h3>Tags:</h3>
     </div>
   </div>
-  {% for tag in tags %}
-  <a href="{{ tag.get_absolute_url }}"><h5>{{tag.tagName}}</h5></a>
+  {% for obj in object_list %}
+  <a href="{{ obj.get_absolute_url }}"><h5>{{obj.tagName}}</h5></a>
   {% endfor %}
 {% endblock %}
 

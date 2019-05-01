@@ -10,11 +10,10 @@
 
 {% block mainContent %}
   {% include "asker/include/questionPost.html" %}
-  {% for answer in answers %}
+  {% for obj in object_list %}
     {% include "asker/include/answer.html" %}
   {% endfor %}
-  <!-- {% include "asker/include/answer.html" %}
-  {% include "asker/include/answer.html" %} -->
+  {% include "asker/include/pageNavigation.html" %}
   <hr>
   <div class="form-group">
     <textarea class="form-control" id="exampleTextarea" rows="10" placeholder="Введите свой ответ"></textarea>

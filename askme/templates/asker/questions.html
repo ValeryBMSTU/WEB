@@ -14,10 +14,14 @@
       <h3>{{header}}</h3>
     </div>
     <div class="col">
+      {% if header == 'New Questions:' %}
       <a href="{% url 'HotQuestions' %}">Hot Questions</a>
+      {% else %}
+      <a href="{% url 'NewQuestions' %}">New Questions</a>
+      {% endif %}
     </div>
   </div>
-  {% for question in questions %}
+  {% for obj in object_list %}
   {% include "asker/include/questionPost.html" %}
   {% endfor %}
   {% include "asker/include/pageNavigation.html" %}

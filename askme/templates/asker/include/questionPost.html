@@ -12,10 +12,10 @@
     </p>
   </div>
   <div class="media-body ml-3 mt-1 mb-1">
-    <a href="{{ question.get_absolute_url }}">
-      <h5>{{question.title}}</h5>
+    <a href="{{obj.get_absolute_url }}">
+      <h5>{{obj.title}}</h5>
     </a>
-    <p>{{question.text}}</p>
+    <p>{{obj.text}}</p>
     <div clas="container">
       <div class="row">
         <div class="col-auto">
@@ -23,7 +23,7 @@
         </div>
         <div class="col">
           Tags:
-          {% for tag in question.tags.all %}
+          {% for tag in obj.tags.all %}
           <a href="{{ tag.get_absolute_url }}">{{tag.tagName}} </a>
           {% endfor %}
         </div>

@@ -3,11 +3,38 @@ from django.db import models
 from django.shortcuts import reverse
 from django.contrib.auth.models import User
 
+# Managers
+
 class QuestionManager(models.Manager):
-    def best_question(self):
-        return self.filter(LikeDislikeBalance__gt=100)
-    def new_question(self):
-        return self.order_by(CreateDate)
+	
+	def sortByDate(self):
+		return self.all().order_by('createDate').reverse()
+
+	def sortByRate(self):
+		return self.all().order_by('pk').reverse()
+
+	def sortById(self):
+		return self.all().order_by('pk')
+
+
+class TagManager(models.Manager):
+	
+	def sortByTag(self, tag_name):
+		return self.filter(title=tag_name).first().questions.all().reverse()
+
+
+class AnswerManager(models.Manager):
+	
+	def sortByRate(self):
+		return self.all().order_by('rating').reverse()
+
+
+class ProfileManager(models.Manager):
+		
+	def sortByUsername(self, username):
+		return self.all().filter(username=username).first()
+
+# Models
 
 class Category(models.Model):
     categoryType = models.CharField(max_length = 32, unique = True)
@@ -26,6 +53,9 @@ class Status(models.Model):
 class Tag(models.Model):
     tagName = models.CharField(max_length = 16, unique = True)
     slug = models.SlugField(max_length=128)
+
+    objects = TagManager()
+
     def __str__(self):
         return self.tagName
 
@@ -37,9 +67,11 @@ class Question(models.Model):
     text = models.TextField()
     slug = models.SlugField(max_length=128, unique=True)
     createDate = models.DateTimeField(auto_now_add=True)
-    user = models.ForeignKey(User, on_delete = models.PROTECT)
-    category = models.ForeignKey(Category, null = True, on_delete = models.PROTECT)
+    user = models.ForeignKey(User, on_delete = models.CASCADE)
+    category = models.ForeignKey(Category, null = True, on_delete = models.CASCADE)
     tags = models.ManyToManyField('Tag', blank=True, related_name='questions')
+
+    objects = QuestionManager()
 
     def __str__(self):
         return self.title
@@ -50,8 +82,10 @@ class Question(models.Model):
 class Answer(models.Model):
     text = models.TextField()
     likeDislikeBalance = models.IntegerField(default = 0)
-    question = models.ForeignKey(Question, null = True, on_delete = models.PROTECT, related_name='answers')
-    user = models.ForeignKey(User, on_delete = models.PROTECT, related_name='answers')
+    question = models.ForeignKey(Question, null = True, on_delete = models.CASCADE, related_name='answers')
+    user = models.ForeignKey(User, on_delete = models.CASCADE, related_name='answers')
+
+    objects = AnswerManager()
 
     def __str__(self):
         return self.text
@@ -60,7 +94,9 @@ class Profile(models.Model):
     nickName = models.CharField(max_length = 32)
     avatarURL = models.CharField(max_length = 64)
     karma = models.IntegerField(default = 0)
-    user = models.OneToOneField(User, on_delete = models.PROTECT)
+    user = models.OneToOneField(User, on_delete = models.CASCADE)
+
+    objects = ProfileManager()
 
     def __str__(self):
         return self.login

@@ -10,8 +10,8 @@
 {% endblock %}
 
 {% block mainContent %}
-  <h3>{{tag.tagName}}:</h3>
-  {% for question in questions %}
+  <h3>{{header}}</h3>
+  {% for obj in object_list %}
   {% include "asker/include/questionPost.html" %}
   {% endfor %}
   {% include "asker/include/pageNavigation.html" %}
