@@ -10,7 +10,7 @@ urlpatterns = [
     path('tags/<str:slug>/', tagDetail, name="TagDetail"),
     path('ask/', ask, name="Ask"),
     path('settings/', settings, name="Settings"),
-    path('login/', login, name="Login"),
+    path('login/', login, name="login"),
     path('registration/', registration, name="Registration"),
     path('users/', users, name="Users"),
 

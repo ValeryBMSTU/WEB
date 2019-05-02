@@ -3,9 +3,10 @@ from django.views.generic import View
 from .models import *
 from django.core.paginator import Paginator
 from .utils import *
-from asker.forms import LoginForm
+from asker.forms import *
 from django import forms
 from django.contrib import auth
+from django.db.models import Count
 
 def baseRender(request, template='/', obj = None):
 
@@ -22,16 +23,6 @@ def paginatorRender(request, object_list, template='/', header = None, obj = Non
     paginator = Paginator(object_list, 3)
     page = request.GET.get('page')
     object_list = paginator.get_page(page)
-    # try:
-    #     objects_page = p.get_page(page)
-
-    # except PageNotAnInteger:
-    #     objects_page = p.get_page(1)
-
-#         paginator = Paginator(questionsList, 2)
-#         page = request.GET.get('page')
-#         questions = paginator.get_page(page)	
-
 
     return render(request, template, {'object_list':  object_list, 'tags': tags, 'users': users, 'obj': obj, 'header': header})
 
@@ -40,9 +31,33 @@ def users(request):
     template = 'asker/users.html'
     return paginatorRender(request, User.objects.all(), template)
 
+# def registration(request):
+#     template =  'asker/registration.html'
+#     return baseRender(request, template)
+
 def registration(request):
     template =  'asker/registration.html'
-    return baseRender(request, template)
+    errors = []
+    form = RegistrationForm
+    if request.method == 'POST':
+        form = form(request.POST)
+        if request.POST['password'] != request.POST['password_confirmation']:
+            errors.append('Passwords don\'t match')
+        elif form.is_valid():
+            user = User.objects.create(username=request.POST['username'],
+                                       email=request.POST['email'],
+                                       first_name=request.POST['first_name'],
+                                       last_name=request.POST['last_name'])
+            user.set_password(request.POST['password_confirmation'])
+            user.save()
+            login(request, user)
+            return redirect('/')
+        else:
+            fillErrors(form.errors, errors)
+    else:
+        logout(request)
+
+    return render(request, template, {'form': form, 'messages': errors})
 
 def login(request):
     template = 'asker/login.html'
@@ -59,17 +74,17 @@ def ask(request):
 def questions(request):
     template = 'asker/questions.html'
     header = 'Questions:'
-    return paginatorRender(request, Question.objects.sortById(), template, header)
+    return paginatorRender(request, Question.objects.sortById().annotate(numb_answers=Count('answers')), template, header)
 
 def newQuestions(request):
     template = 'asker/questions.html'
     header = 'New Questions:'
-    return paginatorRender(request, Question.objects.sortByDate(), template, header)
+    return paginatorRender(request, Question.objects.sortByDate().annotate(numb_answers=Count('answers')), template, header)
 
 def hotQuestions(request):
     template = 'asker/questions.html'
     header = 'Hot Questions:'
-    return paginatorRender(request, Question.objects.sortByRate(), template, header)
+    return paginatorRender(request, Question.objects.annotate(numb_answers=Count('answers')).order_by('-numb_answers'), template, header)
 
 def tags(request):
     template = 'asker/tags.html'
