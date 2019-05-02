@@ -1,8 +1,10 @@
+{% load hot %}
+
 {% block content %}
 <div class="container mb-3 pl-0">
   <h2>Popular Tags</h2>
   <div class="row">
-    {% for tag in tags %}
+    {% for tag in hot_tags %}
     <div class="col">
       <a href="{{ tag.get_absolute_url }}">{{tag}}</a>
     </div>
@@ -11,7 +13,7 @@
 </div>
 <div class="container mb-3 pl-0">
   <h2>Best Members</h2>
-  {% for user in users %}
+  {% for user in hot_users %}
   <div class="row">
     <div class="col">
       <a href="#">{{user}}</a>

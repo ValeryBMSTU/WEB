@@ -7,6 +7,7 @@
 #     header = None
 #     template = None
 
+
 #     def get(self, request, slug = None):
 #         if self.header == 'New Questions:':
 #             objsList = self.model.objects.order_by("-createDate")
