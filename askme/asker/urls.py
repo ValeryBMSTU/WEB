@@ -11,8 +11,7 @@ urlpatterns = [
     path('ask/', ask, name="Ask"),
     path('settings/', settings, name="Settings"),
     path('login/', login, name="login"),
-    path('registration/', signup, name="Registration"),
-    # path('registration/', registration, name="Registration"),
+    path('registration/', registration, name="Registration"),
     path('users/', users, name="Users"),
 
     # path('login_sem/', login, name="login"),

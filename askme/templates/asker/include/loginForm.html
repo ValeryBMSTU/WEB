@@ -1,6 +1,24 @@
 {% block content %}
 {% load static %}
-<form class="needs-validation">
+<div class="main">
+  <h3>Sign in, please, or <a href="{% url 'Registration' %}">register</a></h3>
+  <form class="form-horizontal" action="{% url 'login' %}" method="post">
+      {% csrf_token %}
+      <div class="col-md-16">
+          <fieldset>
+              {% for item in form %}
+                  <div class="form-group">
+                      {{ item }}
+                  </div>
+              {% endfor %}
+              <div class="form-group">
+                  <input type="submit" value="Login" class="btn btn-success"/>
+              </div>
+          </fieldset>
+      </div>
+  </form>
+</div>
+<!-- <form class="needs-validation">
     <div class="row mt-2">
       <div class="col-3">
         <label class="mr" for="login">Login</label>
@@ -33,6 +51,6 @@
           <a href="#">create new account</a>
         </div>
       </div>
-  </form>
+  </form> -->
 
 {% endblock %}

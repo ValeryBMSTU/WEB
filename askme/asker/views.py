@@ -34,13 +34,13 @@ def users(request):
     template = 'asker/users.html'
     return paginatorRender(request, User.objects.all(), template)
 
-def registration(request):
-    template =  'asker/registration.html'
-    return baseRender(request, template)
+# def registration(request):
+#     template =  'asker/registration.html'
+#     return baseRender(request, template)
 
-def login(request):
-    template = 'asker/login.html'
-    return baseRender(request, template)
+# def login(request):
+#     template = 'asker/login.html'
+#     return baseRender(request, template)
 
 def settings(request):
     template = 'asker/settings.html'
@@ -94,7 +94,7 @@ def fillErrors(formErrors, errors):
         errors.append(f' { formattedFieldName } field error: {formErrors[i][0]}')
 
 
-def signup(request):
+def registration(request):
 
     tags = Tag.objects.all()
     users = User.objects.all()	
@@ -113,13 +113,34 @@ def signup(request):
             user.set_password(request.POST['password_confirmation'])
             user.save()
             auth_login(request, user)
-            return redirect('/')
+            return redirect('/asker/questions')
         else:
             fillErrors(form.errors, errors)
     else:
         auth_logout(request)
 
     return render(request, 'asker/registration.html', {'form': form, 'messages': errors, 'tags': tags, 'users': users})
+
+def login(request):
+
+    tags = Tag.objects.all()
+    users = User.objects.all()	
+
+    errors = []
+    form = UserSignInForm
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            auth_login(request, user)
+            return redirect('/asker/questions')
+        else:
+            errors.append('Invalid username or password')
+
+    auth_logout(request)
+    return render(request, 'asker/login.html', {'form': form, 'messages': errors, 'tags': tags, 'users': users})
+
 # class Users(TagsAndUsersMixing, View):
 #     template = 'asker/users.html' 
 

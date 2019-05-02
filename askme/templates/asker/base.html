@@ -19,8 +19,11 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           {% include "asker/include/navbar.html" %}
-          {% block Autorization %}
-          {% endblock %}
+          {% if user.is_authenticated %}
+            {% include "asker/include/Authorized.html" %}
+          {% else %}
+            {% include "asker/include/notAuthorized.html" %}
+          {% endif %}
         </div>
       </nav>
   <div class="container mt-3">
