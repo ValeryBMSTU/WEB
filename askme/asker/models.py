@@ -2,8 +2,6 @@ import requests
 from django.db import models
 from django.shortcuts import reverse
 from django.contrib.auth.models import User
-from django.contrib.auth.models import AbstractUser
-from django.contrib.auth.models import UserManager as AbstractUserManager
 
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
@@ -22,10 +20,12 @@ class QuestionManager(models.Manager):
 	def sortById(self):
 		return self.all().order_by('pk')
 
+
 class TagManager(models.Manager):
 	
 	def sortByTag(self, tag_name):
 		return self.filter(title=tag_name).first().questions.all().reverse()
+
 
 class AnswerManager(models.Manager):
 	
@@ -50,20 +50,16 @@ class LikeDislikeManager(models.Manager):
     def sumRating(self):
         return self.get_queryset().filter(vote__gt=0).count() - self.get_queryset().filter(vote__lt=0).count()
 
-class UserManager(AbstractUserManager):
-    def by_username(self, username):
-        return self.all().filter(username=username).first()
-
 # Models
 
-# class Category(models.Model):
-#     categoryType = models.CharField(max_length = 32, unique = True)
+class Category(models.Model):
+    categoryType = models.CharField(max_length = 32, unique = True)
 
-#     def __str__(self):
-#         return self.categoryType
+    def __str__(self):
+        return self.categoryType
         
-#     def get_absolute_url(self):
-#         return '/catego/%d/' % self.pk
+    def get_absolute_url(self):
+        return '/catego/%d/' % self.pk
 
 
 class Tag(models.Model):
@@ -103,7 +99,7 @@ class Question(models.Model):
     slug = models.SlugField(max_length=128, unique=True)
     createDate = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete = models.CASCADE)
-    # category = models.ForeignKey(Category, null = True, on_delete = models.CASCADE)
+    category = models.ForeignKey(Category, null = True, on_delete = models.CASCADE)
     tags = models.ManyToManyField('Tag', blank=True, related_name='questions')
 
     votes = GenericRelation(LikeDislike, related_query_name='questions')
@@ -129,15 +125,19 @@ class Answer(models.Model):
     def __str__(self):
         return self.text
 
-class User(AbstractUser):
-    upload = models.ImageField(default="avatars/emptyUser.png", upload_to='uploads/%Y/%m/%d/')
-    register_date = models.DateTimeField(auto_now_add=True, verbose_name='Profile creation date')
-    rank = models.IntegerField(default=0, verbose_name='User rating')
+class Profile(models.Model):
+    nickName = models.CharField(max_length = 32)
+    avatarURL = models.CharField(max_length = 64)
+    karma = models.IntegerField(default = 0)
+    user = models.OneToOneField(User, on_delete = models.CASCADE)
 
-    objects = UserManager()
+    objects = ProfileManager()
 
     def __str__(self):
-        return self.username
+        return self.login
+
+    def get_absolute_url(self):
+        return '/users/%d/' % self.pk
 
 
 

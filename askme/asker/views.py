@@ -31,33 +31,9 @@ def users(request):
     template = 'asker/users.html'
     return paginatorRender(request, User.objects.all(), template)
 
-# def registration(request):
-#     template =  'asker/registration.html'
-#     return baseRender(request, template)
-
 def registration(request):
     template =  'asker/registration.html'
-    errors = []
-    form = RegistrationForm
-    if request.method == 'POST':
-        form = form(request.POST)
-        if request.POST['password'] != request.POST['password_confirmation']:
-            errors.append('Passwords don\'t match')
-        elif form.is_valid():
-            user = User.objects.create(username=request.POST['username'],
-                                       email=request.POST['email'],
-                                       first_name=request.POST['first_name'],
-                                       last_name=request.POST['last_name'])
-            user.set_password(request.POST['password_confirmation'])
-            user.save()
-            login(request, user)
-            return redirect('/')
-        else:
-            fillErrors(form.errors, errors)
-    else:
-        logout(request)
-
-    return render(request, template, {'form': form, 'messages': errors})
+    return baseRender(request, template)
 
 def login(request):
     template = 'asker/login.html'
