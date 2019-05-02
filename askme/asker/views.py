@@ -7,6 +7,9 @@ from asker.forms import *
 from django import forms
 from django.contrib import auth
 from django.db.models import Count
+from django.contrib.auth import authenticate
+from django.contrib.auth import login as auth_login
+from django.contrib.auth import logout as auth_logout
 
 def baseRender(request, template='/', obj = None):
 
@@ -84,6 +87,39 @@ def tagDetail(request, slug):
 
     return paginatorRender(request, tag.questions.all(), template, header, tag)
 
+
+def fillErrors(formErrors, errors):
+    for i in formErrors:
+        formattedFieldName = i.replace('_', ' ')
+        errors.append(f' { formattedFieldName } field error: {formErrors[i][0]}')
+
+
+def signup(request):
+
+    tags = Tag.objects.all()
+    users = User.objects.all()	
+
+    errors = []
+    form = UserSignUpForm
+    if request.method == 'POST':
+        form = form(request.POST)
+        if request.POST['password'] != request.POST['password_confirmation']:
+            errors.append('Passwords don\'t match')
+        elif form.is_valid():
+            user = User.objects.create(username=request.POST['username'],
+                                       email=request.POST['email'],
+                                       first_name=request.POST['first_name'],
+                                       last_name=request.POST['last_name'])
+            user.set_password(request.POST['password_confirmation'])
+            user.save()
+            auth_login(request, user)
+            return redirect('/')
+        else:
+            fillErrors(form.errors, errors)
+    else:
+        auth_logout(request)
+
+    return render(request, 'asker/registration.html', {'form': form, 'messages': errors, 'tags': tags, 'users': users})
 # class Users(TagsAndUsersMixing, View):
 #     template = 'asker/users.html' 
 
