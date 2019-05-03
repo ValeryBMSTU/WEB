@@ -17,10 +17,13 @@
   {% include "asker/include/pageNavigation.html" %}
   {% endif %}
   <hr>
-  <div class="form-group">
-    <textarea class="form-control" id="exampleTextarea" rows="10" placeholder="Введите свой ответ"></textarea>
-  </div>
-  <button type="submit" class="btn btn-primary">Answer</button>
+  <form class="form-horizontal" action="{{ request.path }}" method="post">
+    {% csrf_token %}
+    <div class="col-md-12">
+        <div class="form-group">{{ form.text }}</div>
+    </div>
+    <input type="submit" value="Answer" class="btn btn-success"/>
+</form>
 {% endblock %}
 
 {% block tags %}

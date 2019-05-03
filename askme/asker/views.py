@@ -70,15 +70,15 @@ def tags(request):
     template = 'asker/tags.html'
     return paginatorRender(request, Tag.objects.all(), template)
 
-def questionDetail(request, pk):
-    template = 'asker/questionDetail.html'
+# def questionDetail(request, pk):
+#     template = 'asker/questionDetail.html'
 
-    question = get_object_or_404(Question, pk=pk)
-    header = question.title
+#     question = get_object_or_404(Question, pk=pk)
+#     header = question.title
 
-    count = question.votes.likes().count()
+#     count = question.votes.likes().count()
 
-    return paginatorRender(request, question.answers.all(), template, header, question)
+#     return paginatorRender(request, question.answers.all(), template, header, question)
 
 def tagDetail(request, slug):
     template = 'asker/tagDetail.html'
@@ -187,6 +187,30 @@ def ask(request):
             fillErrors(form.errors, errors)
 
     return render(request, 'asker/ask.html', {'form': form, 'messages': errors})
+
+@login_required(login_url='/asker/login')
+def questionDetail(request, pk):
+    errors = []
+    question = get_object_or_404(Question.objects.annotate(numb_answers=Count('answers')), pk=pk)
+    object_list = question.answers.all()
+    obj = question
+    form = WriteAnswerForm
+    if request.method == 'POST':
+        form = form(request.POST)
+        if form.is_valid():
+            newAnswer = Answer.objects.create(user=request.user,
+                                                text=request.POST['text'],
+                                                question=question)
+            newAnswer.save()
+            return redirect('/asker/questions')
+        else:
+            fillErrors(form.errors, errors)
+
+    paginator = Paginator(object_list, 3)
+    page = request.GET.get('page')
+    object_list = paginator.get_page(page)
+
+    return render(request, 'asker/questionDetail.html', {'obj': obj, 'object_list':  object_list, 'form': form, 'messages': errors})
 
 # class Users(TagsAndUsersMixing, View):
 #     template = 'asker/users.html' 
