@@ -1,6 +1,22 @@
 {% block content %}
 {% load static %}
-<form class="needs-validation">
+<form class="form-horizontal" action="{% url 'settings' %}" method="post">
+  {% csrf_token %}
+  <div class="col-md-16">
+    {% for item in form %}
+    <div class="form-group">
+      <label class="col-md-2 control-label" for="login">{{ item.label }}</label>
+      <div class="col-md-4">
+        {{ item }}
+      </div>
+    </div>
+    {% endfor %}
+    <div class="form-group">
+      <input formnovalidate type="submit" value="Save" class="btn btn-success" />
+    </div>
+  </div>
+</form>
+<!-- <form class="needs-validation">
   <div class="feedback">
     <p class="text-danger"> Incorrect input</p>
   </div>
@@ -52,6 +68,6 @@
       <button type="submit" class="btn btn-primary">Save</button>
     </div>
   </div>
-</form>
+</form> -->
 
 {% endblock %}

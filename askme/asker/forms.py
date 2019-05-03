@@ -97,9 +97,7 @@ class UserSettingsForm(forms.ModelForm):
     email = forms.EmailField(required=False,
                              widget=forms.EmailInput(attrs={'class': 'form-control',
                                                             'placeholder': 'E-mail'}))
-
-    upload = forms.ImageField(required=False,
-                              widget=forms.FileInput)
+                                                            
 
     class Meta:
         model = User

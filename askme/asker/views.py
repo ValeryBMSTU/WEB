@@ -10,6 +10,7 @@ from django.db.models import Count
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
+from django.contrib.auth.decorators import login_required
 
 def baseRender(request, template='/', obj = None):
 
@@ -42,13 +43,13 @@ def users(request):
 #     template = 'asker/login.html'
 #     return baseRender(request, template)
 
-def settings(request):
-    template = 'asker/settings.html'
-    return baseRender(request, template)
+# def settings(request):
+#     template = 'asker/settings.html'
+#     return baseRender(request, template)
 
-def ask(request):
-    template = 'asker/ask.html'
-    return baseRender(request, template)
+# def ask(request):
+#     template = 'asker/ask.html'
+#     return baseRender(request, template)
 
 def questions(request):
     template = 'asker/questions.html'
@@ -140,6 +141,52 @@ def login(request):
 
     auth_logout(request)
     return render(request, 'asker/login.html', {'form': form, 'messages': errors, 'tags': tags, 'users': users})
+
+def signout(request):
+    if not request.user.is_authenticated:
+        raise Http404
+    auth_logout(request)
+    return redirect('/asker/questions')
+
+@login_required(login_url='/asker/login')
+def settings(request):
+    errors = []
+    form = UserSettingsForm
+    if request.method == 'POST':
+        form = form(request.POST)
+        if form.is_valid():
+            for changedField in form.changed_data:
+                setattr(request.user, changedField, request.POST[changedField])
+            request.user.save()
+            return redirect('/asker/questions')
+        else:
+            fillErrors(form.errors, errors)
+    else:
+        for i in form.base_fields:
+            form.base_fields[i].widget.attrs['placeholder'] = getattr(request.user, i)
+    return render(request, 'asker/settings.html', {'form': form, 'messages': errors})
+
+@login_required(login_url='/asker/login')
+def ask(request):
+    errors = []
+    form = NewQuestionForm
+    if request.method == 'POST':
+        form = form(request.POST)
+
+        if form.is_valid():
+            question = Question.objects.create(user=request.user,
+                                               title=request.POST['title'],
+                                               text=request.POST['text'])
+            question.save()
+            for tagTitle in request.POST['tags'].split():
+                tag = Tag.objects.get_or_create(tagName=tagTitle, slug=tagTitle)[0]
+                question.tags.add(tag)
+                question.save()
+            return redirect('/asker/questions')
+        else:
+            fillErrors(form.errors, errors)
+
+    return render(request, 'asker/ask.html', {'form': form, 'messages': errors})
 
 # class Users(TagsAndUsersMixing, View):
 #     template = 'asker/users.html' 

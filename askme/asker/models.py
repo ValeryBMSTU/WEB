@@ -52,15 +52,6 @@ class LikeDislikeManager(models.Manager):
 
 # Models
 
-class Category(models.Model):
-    categoryType = models.CharField(max_length = 32, unique = True)
-
-    def __str__(self):
-        return self.categoryType
-        
-    def get_absolute_url(self):
-        return '/catego/%d/' % self.pk
-
 
 class Tag(models.Model):
     tagName = models.CharField(max_length = 16, unique = True)
@@ -96,10 +87,9 @@ class LikeDislike(models.Model):
 class Question(models.Model):
     title = models.CharField(max_length = 128, db_index=True)
     text = models.TextField()
-    slug = models.SlugField(max_length=128, unique=True)
     createDate = models.DateTimeField(auto_now_add=True)
+
     user = models.ForeignKey(User, on_delete = models.CASCADE)
-    category = models.ForeignKey(Category, null = True, on_delete = models.CASCADE)
     tags = models.ManyToManyField('Tag', blank=True, related_name='questions')
 
     votes = GenericRelation(LikeDislike, related_query_name='questions')
@@ -114,7 +104,6 @@ class Question(models.Model):
 
 class Answer(models.Model):
     text = models.TextField()
-    likeDislikeBalance = models.IntegerField(default = 0)
     question = models.ForeignKey(Question, null = True, on_delete = models.CASCADE, related_name='answers')
     user = models.ForeignKey(User, on_delete = models.CASCADE, related_name='answers')
 
@@ -126,9 +115,7 @@ class Answer(models.Model):
         return self.text
 
 class Profile(models.Model):
-    nickName = models.CharField(max_length = 32)
-    avatarURL = models.CharField(max_length = 64)
-    karma = models.IntegerField(default = 0)
+    avatarURL = models.ImageField(null = True)
     user = models.OneToOneField(User, on_delete = models.CASCADE)
 
     objects = ProfileManager()
