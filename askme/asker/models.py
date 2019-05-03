@@ -14,9 +14,6 @@ class QuestionManager(models.Manager):
 	def sortByDate(self):
 		return self.all().order_by('createDate').reverse()
 
-	# def sortByHot(self):
-	# 	return self.all().order_by('numb_answers')
-
 	def sortById(self):
 		return self.all().order_by('pk')
 
@@ -126,20 +123,3 @@ class Profile(models.Model):
     def get_absolute_url(self):
         return '/users/%d/' % self.pk
 
-
-
-# class QuestionLikeDisLike(models.Model):
-#     likeDisLike = models.IntegerField()
-#     question = models.ForeignKey(Question, on_delete = models.CASCADE, related_name="likes", null=True)
-#     user = models.ForeignKey(User, on_delete = models.CASCADE, related_name='likes')
-
-#     class Meta:
-#         unique_together = ('question', 'user',)
-
-# class AnswerLikeDisLike(models.Model):
-#     likeDisLike = models.IntegerField()
-#     answer = models.ForeignKey(Answer, on_delete = models.CASCADE, related_name="disLikes", null=True)
-#     user = models.ForeignKey(User, on_delete = models.CASCADE, related_name='disLikes')
-
-#     class Meta:
-#         unique_together = ('answer', 'user',)

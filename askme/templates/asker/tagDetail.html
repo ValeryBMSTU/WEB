@@ -5,10 +5,6 @@
 <title>tag detail</title>
 {% endblock %}
 
-{% block Autorization %}
-{% include "asker/include/notAuthorized.html" %}
-{% endblock %}
-
 {% block mainContent %}
   <h3>{{header}}</h3>
   {% for obj in object_list %}
