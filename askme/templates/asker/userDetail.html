@@ -5,8 +5,27 @@
 {% endblock %}
 
 {% block mainContent %}
-  <h2 class="text-info">{{obj.NickName}}</h2>
-  <h6 class="text-info">{{obj.pk}}</h6>
+<div class="media border mt-3">
+  <div class="ml-1 mt-1">
+    <img src="{% static 'img/noAvatarIcon.png' %}" class="img-fluid mb-1" alt="generic placeholder">
+  </div>
+  <div class="media-body ml-3 mt-1 mb-1">
+    <a href="{{obj.get_absolute_url }}">y</a>
+      <h5>User Profile</h5>
+    <p>About me:</p>
+    <p>Я пользователь.</p>
+    <div clas="container">
+      <div class="row">
+        <div class="col-auto">
+          Answers count: <a href="#">{{obj.numb_answers}}</a>
+        </div>
+        <div class="col-auto">
+          Questions count: <a href="#">{{obj.numb_questions}}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
 
 {% block tags %}

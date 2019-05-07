@@ -14,6 +14,8 @@ urlpatterns = [
     path('signout/', signout, name='signout'),
     path('registration/', registration, name="Registration"),
     path('users/', users, name="Users"),
+    path('users/best/', topUsers, name="topUsers"),
+    path('users/<int:pk>/', userDetail, name="userDetail"),
 
     # path('login_sem/', login, name="login"),
 ]

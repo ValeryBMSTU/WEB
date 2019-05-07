@@ -11,17 +11,12 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
 
-def baseRender(request, template='/', obj = None):
-
-    tags = Tag.objects.all()
-    users = User.objects.all()	
-
-    return render(request, template, context={'obj': obj, 'tags': tags, 'users': users, 'obj': obj})
+def fillErrors(formErrors, errors):
+    for i in formErrors:
+        formattedFieldName = i.replace('_', ' ')
+        errors.append(f' { formattedFieldName } field error: {formErrors[i][0]}')
 
 def paginatorRender(request, object_list, template='/', header = None, obj = None):
-
-    tags = Tag.objects.all()
-    users = User.objects.all()
 
     paginator = Paginator(object_list, 5)
     page = request.GET.get('page')
@@ -29,10 +24,21 @@ def paginatorRender(request, object_list, template='/', header = None, obj = Non
 
     return render(request, template, {'object_list':  object_list, 'obj': obj, 'header': header})
 
+def userDetail(request, pk):
+    template = 'asler/userDetail.html'
+    header = 'User Profile:'
+    userProfile = get_object_or_404(User.objects.annotate(numb_answers=Count('answers'), numb_questions=Count('questions')), pk=pk)
+    return render(request, template, {'user': userProfile})
 
 def users(request):
     template = 'asker/users.html'
-    return paginatorRender(request, User.objects.all(), template)
+    header = "Users:"
+    return paginatorRender(request, User.objects.annotate(numb_answers=Count('answers')).all(), template)
+
+def topUsers(request):
+    template = 'asker/users.html'
+    header = 'Top Users:'
+    return paginatorRender(request, User.objects.annotate(numb_answers=Count('answers')).order_by('-numb_answers'), template, header)
 
 def questions(request):
     template = 'asker/questions.html'
@@ -61,17 +67,7 @@ def tagDetail(request, slug):
 
     return paginatorRender(request, tag.questions.all(), template, header, tag)
 
-
-def fillErrors(formErrors, errors):
-    for i in formErrors:
-        formattedFieldName = i.replace('_', ' ')
-        errors.append(f' { formattedFieldName } field error: {formErrors[i][0]}')
-
-
 def registration(request):
-
-    tags = Tag.objects.all()
-    users = User.objects.all()	
 
     errors = []
     form = UserSignUpForm
@@ -93,12 +89,9 @@ def registration(request):
     else:
         auth_logout(request)
 
-    return render(request, 'asker/registration.html', {'form': form, 'messages': errors, 'tags': tags, 'users': users})
+    return render(request, 'asker/registration.html', {'form': form, 'messages': errors})
 
 def login(request):
-
-    tags = Tag.objects.all()
-    users = User.objects.all()	
 
     errors = []
     form = UserSignInForm
@@ -183,5 +176,6 @@ def questionDetail(request, pk):
     page = request.GET.get('page')
     object_list = paginator.get_page(page)
 
+    # return paginatorRender(request, object_list, 'asker/questionDetail.html', obj)
     return render(request, 'asker/questionDetail.html', {'obj': obj, 'object_list':  object_list, 'form': form, 'messages': errors})
 
