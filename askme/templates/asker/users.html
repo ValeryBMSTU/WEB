@@ -1,16 +1,23 @@
 {% extends "asker/base.html" %}
 
 {% block title %}
-<title>user</title>
-{% endblock %}
-
-{% block user %}
-{% include "asker/include/Authorized.html" %}
+  <title>user</title>
 {% endblock %}
 
 {% block mainContent %}
+  <div class="row align-items-center">
+    <div class="col-auto">
+      <h3>Users:</h3>
+    </div>
+  </div>
+  {% for obj in object_list %}
+    {% include "asker/include/user.html" %}
+  {% endfor %}
+  {% if object_list.paginator.num_pages > 1 %}
+  {% include "asker/include/pageNavigation.html" %}
+  {% endif %}
 {% endblock %}
 
 {% block tags %}
-{% include "asker/include/tags.html" %}
+  {% include "asker/include/tags.html" %}
 {% endblock %}

@@ -1,17 +1,21 @@
-from django.conf.urls import url, include
-from django.urls import path, re_path
-from django.views.generic import ListView, DetailView
-from asker.models import Answer, Question, Tag, User, Status, Category 
-from . import views
+from django.urls import path
+from .views import *
 
 urlpatterns = [
-    path('index/', views.index, name='index'),
-    path('tag/', views.tag, name="tag"),
-    path('ask/', views.ask, name="ask"),
-    path('question/', views.question, name="question"),
-    path('settings/', views.settings, name="settings"),
-    path('login/', views.login, name="login"),
-    path('registration/', views.registration, name="registration"),
-    #path('asks/', ListView.as_view(queryset=Asks.objects.all().order_by("Title")[:20], template_name="asker/asks.html"))
-    #path("user/<int:pk>", DetailView.as_view(model = User, template_name = "user.html"))
+    path('', newQuestions, name="NewQuestions"),
+    path('questions/', questions, name="Questions"),
+    path('questions/hot/', hotQuestions, name='HotQuestions'),
+    path('questions/<int:pk>/', questionDetail, name='QuestionDetail'),
+    path('tags/', tags, name='Tags'),
+    path('tags/<str:slug>/', tagDetail, name="TagDetail"),
+    path('ask/', ask, name="ask"),
+    path('settings/', settings, name="settings"),
+    path('login/', login, name="login"),
+    path('signout/', signout, name='signout'),
+    path('registration/', registration, name="Registration"),
+    path('users/', users, name="Users"),
+    path('users/best/', topUsers, name="topUsers"),
+    path('users/<int:pk>/', userDetail, name="userDetail"),
+
+    # path('login_sem/', login, name="login"),
 ]

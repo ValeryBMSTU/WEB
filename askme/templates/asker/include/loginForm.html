@@ -1,44 +1,21 @@
 {% block content %}
 {% load static %}
-<div class="row mt-2">
-    <div class="col-3">
-        <label class="mr" for="inputPassword4">Login</label>
-    </div>
-    <div class="col">
-        <form class="form-inline">
-            <input type="text" id="inputPassword4" class="form-control" aria-describedby="passwordHelpInline">
-        </form>
-    </div>
+<div class="main">
+  <h3>Sign in, please, or <a href="{% url 'Registration' %}">register</a></h3>
+  <form class="form-horizontal" action="{% url 'login' %}" method="post">
+      {% csrf_token %}
+      <div class="col-md-16">
+          <fieldset>
+              {% for item in form %}
+                  <div class="form-group">
+                      {{ item }}
+                  </div>
+              {% endfor %}
+              <div class="form-group">
+                  <input type="submit" value="Login" class="btn btn-success"/>
+              </div>
+          </fieldset>
+      </div>
+  </form>
 </div>
-<div class="row mt-2">
-    <div class="col-3">
-        <label class="mr" for="inputPassword4">Password</label>
-    </div>
-    <div class="col">
-        <form class="form-inline">
-            <input type="password" id="inputPassword4" class="form-control" aria-describedby="passwordHelpInline">
-        </form>
-    </div>
-</div>
-<div class="row mt-2">
-    <div class="col-3">
-        <label class="mr" for="inputPassword4"></label>
-    </div>
-    <div class="col">
-        <form class="form-inline">
-            <button type="submit" class="btn btn-primary">Log in!</button>
-        </form>
-    </div>
-</div>
-<div class="row mt-2">
-    <div class="col-3">
-        <label class="mr" for="inputPassword4"></label>
-    </div>
-    <div class="col">
-        <form class="form-inline">
-            <a href="#">register</a>
-        </form>
-    </div>
-</div>
-
 {% endblock %}

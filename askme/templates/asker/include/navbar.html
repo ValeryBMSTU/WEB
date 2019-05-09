@@ -1,0 +1,34 @@
+{% block content %}
+{% load static %}
+<ul class="navbar-nav mr-auto">
+    <li class="nav-item active">
+      <a class="nav-link" href="{% url 'NewQuestions' %}">Home <span class="sr-only">(current)</span></a>
+    </li>
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false">
+        Questions
+      </a>
+      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <a class="dropdown-item" href="{% url 'NewQuestions' %}">New Questions</a>
+        <a class="dropdown-item" href="{% url 'HotQuestions' %}">Hot Questions</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="{% url 'Tags' %}">Questions by Tag</a>
+      </div>
+    </li>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Users
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="{% url 'Users' %}">Users</a>
+          <a class="dropdown-item" href="{% url 'topUsers' %}">Top Users</a>
+        </div>
+      </li>
+  </ul>
+  <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-1" type="search" placeholder="search" aria-label="search">
+      <button class="btn btn-success" type="button">Ask!</button>
+  </form>
+{% endblock %}

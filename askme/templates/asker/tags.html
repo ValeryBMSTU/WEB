@@ -1,0 +1,20 @@
+{% extends "asker/base.html" %}
+{% load static %}
+{% block title %}
+<title>tags</title>
+{% endblock %}
+
+{% block mainContent %}
+  <div class="row align-items-center">
+    <div class="col-auto">
+      <h3>Tags:</h3>
+    </div>
+  </div>
+  {% for obj in object_list %}
+  <a href="{{ obj.get_absolute_url }}"><h5>{{obj.tagName}}</h5></a>
+  {% endfor %}
+{% endblock %}
+
+{% block tags %}
+{% include "asker/include/tags.html" %}
+{% endblock %}

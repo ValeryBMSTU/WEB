@@ -1,0 +1,31 @@
+{% extends "asker/base.html" %}
+{% load static %}
+{% block title %}
+<title>question detail</title>
+{% endblock %}
+
+<!-- {% block Autorization %}
+{% include "asker/include/Authorized.html" %}
+{% endblock %} -->
+
+{% block mainContent %}
+  {% include "asker/include/questionPost.html" %}
+  {% for obj in object_list %}
+    {% include "asker/include/answer.html" %}
+  {% endfor %}
+  {% if object_list.paginator.num_pages > 1 %}
+  {% include "asker/include/pageNavigation.html" %}
+  {% endif %}
+  <hr>
+  <form class="form-horizontal" action="{{ request.path }}" method="post">
+    {% csrf_token %}
+    <div class="col-md-12">
+        <div class="form-group">{{ form.text }}</div>
+    </div>
+    <input type="submit" value="Answer" class="btn btn-success"/>
+</form>
+{% endblock %}
+
+{% block tags %}
+{% include "asker/include/tags.html" %}
+{% endblock %}

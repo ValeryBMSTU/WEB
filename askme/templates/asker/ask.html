@@ -5,7 +5,7 @@
 <title>ask</title>
 {% endblock %}
 
-{% block user %}
+{% block Autorization %}
 {% include "asker/include/notAuthorized.html" %}
 {% endblock %}
 
@@ -16,11 +16,4 @@
     </div>
   </div>
   {% include "asker/include/askForm.html" %}
-  {% for val in values %}
-  <p>{{val}}</p>
-  {% endfor %}
-{% endblock %}
-
-{% block tags %}
-{% include "asker/include/tags.html" %}
 {% endblock %}

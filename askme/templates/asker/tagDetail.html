@@ -1,0 +1,14 @@
+{% extends "asker/base.html" %}
+{% load staticfiles %}
+
+{% block title %}
+<title>tag detail</title>
+{% endblock %}
+
+{% block mainContent %}
+  <h3>{{header}}</h3>
+  {% for obj in object_list %}
+  {% include "asker/include/questionPost.html" %}
+  {% endfor %}
+  {% include "asker/include/pageNavigation.html" %}
+{% endblock %}

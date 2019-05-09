@@ -1,19 +1,31 @@
 {% block content %}
+
 <nav aria-label="Page navigation example">
   <ul class="pagination mt-3 mb-0">
+    {% if object_list.has_previous %}
     <li class="page-item">
-      <a class="page-link" href="#" aria-label="Previous">
+      <a class="page-link" href="?page={{ object_list.previous_page_number }}" aria-label="Previous">
         <span aria-hidden="true">&laquo;</span>
       </a>
     </li>
-    <li class="page-item"><a class="page-link" href="#">1</a></li>
-    <li class="page-item"><a class="page-link" href="#">2</a></li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li>
+    {% endif %}
+    {% if object_list.has_previous %}
+    <li class="page-item"><a class="page-link" href="?page={{ object_list.previous_page_number }}">{{ object_list.previous_page_number}}</a></li>
+    {% endif %}
+    <li class="page-item active" ><a class="page-link" href="#">{{ object_list.number }}</a></li>
+    {% if object_list.has_next %}
+    <li class="page-item"><a class="page-link" href="?page={{ object_list.next_page_number }}">{{ object_list.next_page_number}}</a></li>
+    {% endif %}
+    {% if object_list.has_next %}
     <li class="page-item">
-      <a class="page-link" href="#" aria-label="Next">
+      <a class="page-link" href="?page={{ object_list.next_page_number }}" aria-label="Next">
         <span aria-hidden="true">&raquo;</span>
       </a>
     </li>
+    {% endif %}
   </ul>
+  <span class="current">
+      Page {{ object_list.number }} of {{ object_list.paginator.num_pages }}.
+  </span>
 </nav>
 {% endblock %}

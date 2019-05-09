@@ -1,64 +1,19 @@
 {% block content %}
 {% load static %}
-<div class="row mt-2">
-  <div class="col-3">
-    <label class="mr" for="inputPassword4">Login</label>
+<form class="form-horizontal" action="{% url 'settings' %}" method="post">
+  {% csrf_token %}
+  <div class="col-md-16">
+    {% for item in form %}
+    <div class="form-group">
+      <label class="col-md-2 control-label" for="login">{{ item.label }}</label>
+      <div class="col-md-4">
+        {{ item }}
+      </div>
+    </div>
+    {% endfor %}
+    <div class="form-group">
+      <input formnovalidate type="submit" value="Save" class="btn btn-success" />
+    </div>
   </div>
-  <div class="col">
-    <form class="form-inline">
-      <input type="password" id="inputPassword4" class="form-control" aria-describedby="passwordHelpInline">
-    </form>
-  </div>
-</div>
-<div class="row mt-2">
-  <div class="col-3">
-    <label class="mr" for="inputPassword4">Email</label>
-  </div>
-  <div class="col">
-    <form class="form-inline">
-      <input type="password" id="inputPassword4" class="form-control" aria-describedby="passwordHelpInline">
-    </form>
-  </div>
-</div>
-<div class="row mt-2">
-  <div class="col-3">
-    <label class="mr" for="inputPassword4">NickName</label>
-  </div>
-  <div class="col">
-    <form class="form-inline">
-      <input type="password" id="inputPassword4" class="form-control" aria-describedby="passwordHelpInline">
-    </form>
-  </div>
-</div>
-<div class="row mt-2">
-  <div class="col-3">
-    <label class="mr" for="inputPassword4">Upload avatar</label>
-  </div>
-  <div class="col">
-    <form class="form-inline">
-      <img src="{% static 'img/noAvatarIcon.png' %}" class="img-fluid mb-1" alt="generic placeholder">
-    </form>
-  </div>
-</div>
-<div class="row mt-2">
-  <div class="col-3">
-    <label class="mr" for="inputPassword4"></label>
-  </div>
-  <div class="col">
-    <form class="form-inline">
-      <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp">
-    </form>
-  </div>
-</div>
-<div class="row mt-2">
-  <div class="col-3">
-    <label class="mr" for="inputPassword4"></label>
-  </div>
-  <div class="col">
-    <form class="form-inline">
-      <button type="submit" class="btn btn-primary">Save</button>
-    </form>
-  </div>
-</div>
-
+</form>
 {% endblock %}

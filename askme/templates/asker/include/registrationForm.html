@@ -1,64 +1,20 @@
 {% block content %}
 {% load static %}
-<form class="needs-validation">
-<div class="feedback">
-    <p class="text-danger"> Incorrect input</p>
-  </div>
-  <div class="row mt-2">
-    <div class="col-3">
-      <label class="mr" for="login">Login</label>
-    </div>
-    <div class="input-group col-md-5">
-      <input id="login"  type="text" class="form-control" required>
-    </div>
-  </div>
-  <div class="row mt-2">
-    <div class="col-3">
-      <label class="mr" for="inputPassword4">Email</label>
-    </div>
-    <div class="input-group col-md-5">
-      <input type="text" class="form-control">
-    </div>
-  </div>
-  <div class="row mt-2">
-    <div class="col-3">
-      <label class="mr" for="inputPassword4">NickName</label>
-    </div>
-    <div class="input-group col-md-5">
-      <input type="text" class="form-control">
-    </div>
-  </div>
-  <div class="row mt-2">
-    <div class="col-3">
-      <label class="mr" for="inputPassword4">Password</label>
-    </div>
-    <div class="input-group col-md-5">
-      <input type="text" class="form-control">
-    </div>
-  </div>
-  <div class="row mt-2">
-    <div class="col-3">
-      <label class="mr" for="inputPassword4">Repeat password</label>
-    </div>
-    <div class="input-group col-md-5">
-      <input type="text" class="form-control">
-    </div>
-  </div>
-  <div class="row mt-2">
-    <div class="col-3">
-      <label class="mr" for="inputPassword4">Upload avatar</label>
-    </div>
-    <div class="col-7">
-      <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp">
-    </div>
-  </div>
-  <div class="row mt-2">
-    <div class="col-3">
-      <label class="mr" for="inputPassword4"></label>
-    </div>
-    <div class="col-7">
-      <button type="submit" class="btn btn-primary">Register</button>
-    </div>
-  </div>
-</form>
+<div class="main">
+  <form class="form-horizontal" action="{% url 'Registration' %}" method="post">
+      {% csrf_token %}
+      <div class="col-md-16">
+          <fieldset>
+              {% for item in form %}
+                  <div class="form-group">
+                      {{ item }}
+                  </div>
+              {% endfor %}
+              <div class="form-group">
+                  <input type="submit" value="Register" class="btn btn-success"/>
+              </div>
+          </fieldset>
+      </div>
+  </form>
+</div>
 {% endblock %}

@@ -70,6 +70,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'askme.wsgi.application'
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+  'django.core.context_processors.request',
+)
+
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
